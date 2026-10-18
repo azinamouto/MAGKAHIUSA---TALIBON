@@ -1,0 +1,9 @@
+{
+  "name": "@magkahiusa/ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "./notice": "./src/notice.ts"
+  }
+}

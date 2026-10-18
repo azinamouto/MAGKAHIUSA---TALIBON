@@ -1,0 +1,16 @@
+openapi: 3.0.3
+info:
+  title: MAGKAHIUSA–TALIBON Foundation API
+  version: 0.1.0
+  description: Only unprivileged health and metadata endpoints exist. No resident or aid APIs are available.
+paths:
+  /health:
+    get:
+      summary: Liveness check
+      responses:
+        '200': {description: API alive}
+  /api/v1/meta:
+    get:
+      summary: Public architecture baseline metadata
+      responses:
+        '200': {description: Version and deployment warning}

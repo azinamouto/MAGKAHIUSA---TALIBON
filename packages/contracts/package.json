@@ -1,0 +1,12 @@
+{
+  "name": "@magkahiusa/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./meta": "./src/meta.ts"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  }
+}

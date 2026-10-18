@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_DB: magkahiusa
+      POSTGRES_USER: magkahiusa
+      POSTGRES_PASSWORD: development_only
+    volumes:
+      - magkahiusa-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U magkahiusa -d magkahiusa"]
+      interval: 5s
+      retries: 10
+volumes:
+  magkahiusa-postgres:

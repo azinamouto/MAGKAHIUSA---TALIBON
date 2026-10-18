@@ -1,0 +1,28 @@
+name: Package release candidates
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: corepack enable
+      - run: corepack pnpm install --no-frozen-lockfile
+      - run: corepack pnpm typecheck && corepack pnpm test && corepack pnpm build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: magkahiusa-${{ github.sha }}
+          path: |
+            apps/*/dist/
+            docs/
+            infrastructure/
+          retention-days: 14
+# Deliberately no unattended production deployment. Approval, secrets and restore tests are required.
