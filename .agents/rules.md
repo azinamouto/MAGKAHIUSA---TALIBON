@@ -9,3 +9,4 @@
 8. All aid eligibility remains reviewable by an authorized human with appeal/correction processes.
 9. Always test concurrency, idempotency, network outages, access controls, and backups.
 10. Don't silently change ADR decisions; propose a new ADR when architecture changes.
+--test
