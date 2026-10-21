@@ -1,22 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { AppShell } from './components/AppShell';
 import './style.css';
 
-const pages = [
-  { title: 'Household registry', description: 'Identity model pending ADR-002. No records shown.', icon: '⌂' },
-  { title: 'Disaster operations', description: 'Incident reporting and verification are not enabled.', icon: '◈' },
-  { title: 'Ayuda traceability', description: 'Distribution ledger and approvals are design-only.', icon: '▤' },
-  { title: 'Public accountability', description: 'No unverified population or budget figures.', icon: '◎' },
-];
-function App() {
-  return <div className="shell">
-    <aside className="sidebar"><div className="mark">M</div><div className="brand">MAGKAHIUSA<span>TALIBON</span></div><div className="sidebar-bottom">ENGINEERING FOUNDATION<br/>v0.1.0</div></aside>
-    <main className="content"><div className="topline"><span>MUNICIPAL COMMAND CENTER</span><span className="dot">● FOUNDATION ONLY</span></div>
-      <section className="hero"><div className="eyebrow">ONE MUNICIPALITY · CONNECTED BARANGAYS</div><h1>Municipal Command Center</h1><p>Municipal emergency coordination — no live data connected.</p><div className="warning">Prototype shell. No production authentication, barangay sync, disaster reports, or resident data are active.</div></section>
-      <div className="section-head"><h2>Planned capabilities</h2><span>Design phase</span></div>
-      <div className="cards">{pages.map((p)=><article className="card" key={p.title}><div className="card-icon">{p.icon}</div><h3>{p.title}</h3><p>{p.description}</p><div className="status">NOT IMPLEMENTED</div></article>)}</div>
-      <footer>ALZA.Net IT Solutions · MAGKAHIUSA–TALIBON · No official LGU records</footer>
-    </main></div>
+export function App() {
+  const [activePath, setActivePath] = useState('/');
+
+  return (
+    <AppShell activePath={activePath} onNavigate={(path) => setActivePath(path)}>
+      <div className="command-center-root">
+        <div style={{ marginBottom: '1.5rem' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--gov-green-900)' }}>
+            Municipal Command Center
+          </h1>
+          <p style={{ color: 'var(--gov-slate-600)', marginTop: '0.25rem' }}>
+            Talibon Municipal Disaster Risk Reduction & Management Council (MDRRMC)
+          </p>
+        </div>
+
+        <div
+          style={{
+            background: 'var(--gov-amber-50)',
+            border: '1px solid var(--gov-amber-200)',
+            borderRadius: '6px',
+            padding: '1rem',
+            color: 'var(--gov-amber-700)',
+            fontSize: '0.875rem',
+            marginBottom: '1.5rem',
+          }}
+        >
+          <strong>Notice:</strong> Operating under ADR-001 Foundation Mode. Privileged write actions
+          are gated. No live citizen PII is rendered.
+        </div>
+      </div>
+    </AppShell>
+  );
 }
 
-createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
+const rootEl = document.getElementById('root');
+if (rootEl) {
+  createRoot(rootEl).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
+}
