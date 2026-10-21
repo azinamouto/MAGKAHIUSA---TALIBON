@@ -31,3 +31,4 @@ export interface DraftQueueEntry<T = unknown> {
   createdAt: string;
   clientRevision: number;
 }
+
