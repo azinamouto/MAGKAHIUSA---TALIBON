@@ -30,3 +30,4 @@ function cleanDir(dir) {
 console.log('Cleaning build artifacts...');
 cleanDir(ROOT);
 console.log('✓ Clean completed.');
+
