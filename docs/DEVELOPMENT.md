@@ -83,3 +83,4 @@ All contributors and AI agents must strictly follow `AGENTS.md` and `docs/adr/AD
 2. **Deny-by-default privileged operations**: Any new privileged endpoint or UI view must require authorization and tenant/barangay scoping.
 3. **No silent conflict overwrites**: Offline drafts and updates must preserve revision history and present explicit resolution interfaces.
 4. **Human-in-the-loop for aid**: Automated aid eligibility or denial is prohibited; all distributions require authorized human sign-off.
+
