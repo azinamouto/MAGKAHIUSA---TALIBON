@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Sidebar } from './Sidebar';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -14,14 +15,6 @@ export const AppShell: React.FC<AppShellProps> = ({
   breadcrumbs = [{ label: 'Command Center', path: '/' }],
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const navItems = [
-    { label: 'Command Center', path: '/', icon: '🏛️' },
-    { label: 'Barangay Directory', path: '/barangays', icon: '📍' },
-    { label: 'Disaster Operations', path: '/incidents', icon: '🚨' },
-    { label: 'Relief & Assistance', path: '/assistance', icon: '📦' },
-    { label: 'System Audit & Status', path: '/status', icon: '🛡️' },
-  ];
 
   return (
     <div className="gov-shell">
@@ -63,54 +56,12 @@ export const AppShell: React.FC<AppShellProps> = ({
         </div>
 
         {/* Sidebar Navigation */}
-        <aside
-          className={`gov-sidebar ${mobileMenuOpen ? 'open' : ''}`}
-          aria-label="Sidebar navigation"
-        >
-          <div className="sidebar-brand">
-            <div className="brand-logo-seal" aria-hidden="true">
-              TLB
-            </div>
-            <div className="brand-copy">
-              <span className="brand-title">MAGKAHIUSA</span>
-              <span className="brand-subtitle">MUNICIPAL COMMAND</span>
-            </div>
-          </div>
-
-          <nav className="sidebar-nav" aria-label="Main Navigation">
-            <ul className="nav-list">
-              {navItems.map((item) => {
-                const isActive = activePath === item.path;
-                return (
-                  <li key={item.path} className="nav-item">
-                    <button
-                      type="button"
-                      className={`nav-link ${isActive ? 'active' : ''}`}
-                      aria-current={isActive ? 'page' : undefined}
-                      onClick={() => {
-                        onNavigate(item.path);
-                        setMobileMenuOpen(false);
-                      }}
-                    >
-                      <span className="nav-icon" aria-hidden="true">
-                        {item.icon}
-                      </span>
-                      <span className="nav-label">{item.label}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          <div className="sidebar-footer">
-            <div className="compliance-note">
-              <strong>ADR-001 Compliance</strong>
-              <p>Authoritative writes strictly gated. Deny by default.</p>
-            </div>
-            <div className="version-tag">Version 0.2.0-alpha</div>
-          </div>
-        </aside>
+        <Sidebar
+          activePath={activePath}
+          onNavigate={onNavigate}
+          isOpen={mobileMenuOpen}
+          onClose={() => setMobileMenuOpen(false)}
+        />
 
         {/* Mobile Backdrop */}
         {mobileMenuOpen && (

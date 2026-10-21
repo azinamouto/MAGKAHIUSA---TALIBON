@@ -213,6 +213,32 @@ body {
   outline-offset: 1px;
 }
 
+.nav-badge {
+  margin-left: auto;
+  font-size: 0.6875rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.nav-badge.neutral {
+  background-color: var(--gov-slate-100);
+  color: var(--gov-slate-600);
+}
+
+.nav-badge.warning {
+  background-color: var(--gov-amber-50);
+  color: var(--gov-amber-700);
+  border: 1px solid var(--gov-amber-200);
+}
+
+.nav-badge.info {
+  background-color: var(--gov-green-50);
+  color: var(--gov-green-700);
+  border: 1px solid var(--gov-green-100);
+}
+
 .sidebar-footer {
   padding: 1rem;
   border-top: 1px solid var(--gov-slate-200);
