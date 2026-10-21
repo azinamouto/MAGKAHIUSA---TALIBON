@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { MobileNav } from './MobileNav';
+import { HeaderBar, BreadcrumbItem } from './HeaderBar';
 
 interface AppShellProps {
   children: React.ReactNode;
   activePath: string;
   onNavigate: (path: string) => void;
-  breadcrumbs?: Array<{ label: string; path?: string }>;
+  breadcrumbs?: BreadcrumbItem[];
+  systemStatus?: 'operational' | 'monitoring' | 'offline';
+  lastUpdated?: string;
 }
 
 export const AppShell: React.FC<AppShellProps> = ({
@@ -14,6 +17,8 @@ export const AppShell: React.FC<AppShellProps> = ({
   activePath,
   onNavigate,
   breadcrumbs = [{ label: 'Command Center', path: '/' }],
+  systemStatus = 'monitoring',
+  lastUpdated = 'Live Foundation',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -67,46 +72,15 @@ export const AppShell: React.FC<AppShellProps> = ({
           onNavigate={onNavigate}
         />
 
-        {/* Mobile Backdrop */}
-        {mobileMenuOpen && (
-          <div
-            className="mobile-backdrop"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-hidden="true"
-          />
-        )}
-
         {/* Main Content Area */}
         <div className="gov-main-wrapper">
           {/* Header & Breadcrumb Bar */}
-          <div className="gov-subnav-bar">
-            <nav className="breadcrumbs" aria-label="Breadcrumb">
-              <ol>
-                {breadcrumbs.map((crumb, idx) => (
-                  <li key={crumb.label}>
-                    {idx > 0 && <span className="breadcrumb-separator">/</span>}
-                    {crumb.path && idx < breadcrumbs.length - 1 ? (
-                      <button
-                        type="button"
-                        className="breadcrumb-link"
-                        onClick={() => onNavigate(crumb.path!)}
-                      >
-                        {crumb.label}
-                      </button>
-                    ) : (
-                      <span className="breadcrumb-current" aria-current="page">
-                        {crumb.label}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </nav>
-            <div className="system-live-indicator">
-              <span className="indicator-dot online" aria-hidden="true" />
-              <span className="indicator-text">System Active</span>
-            </div>
-          </div>
+          <HeaderBar
+            breadcrumbs={breadcrumbs}
+            onNavigate={onNavigate}
+            systemStatus={systemStatus}
+            lastUpdated={lastUpdated}
+          />
 
           <main id="main-content" className="gov-content" tabIndex={-1}>
             {children}
@@ -132,3 +106,4 @@ export const AppShell: React.FC<AppShellProps> = ({
     </div>
   );
 };
+
