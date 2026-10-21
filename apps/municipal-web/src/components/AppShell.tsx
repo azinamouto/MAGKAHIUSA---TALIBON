@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
+import { MobileNav } from './MobileNav';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -55,12 +56,15 @@ export const AppShell: React.FC<AppShellProps> = ({
           <div className="mobile-title">MAGKAHIUSA TALIBON</div>
         </div>
 
-        {/* Sidebar Navigation */}
-        <Sidebar
-          activePath={activePath}
-          onNavigate={onNavigate}
+        {/* Sidebar Navigation for Desktop */}
+        <Sidebar activePath={activePath} onNavigate={onNavigate} />
+
+        {/* Dedicated Accessible Mobile Drawer */}
+        <MobileNav
           isOpen={mobileMenuOpen}
           onClose={() => setMobileMenuOpen(false)}
+          activePath={activePath}
+          onNavigate={onNavigate}
         />
 
         {/* Mobile Backdrop */}

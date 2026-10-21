@@ -426,4 +426,111 @@ body {
   .gov-content {
     padding: 1rem;
   }
+
+  /* Accessible Mobile Navigation Drawer */
+  .mobile-nav-root {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+  }
+
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    max-width: 85vw;
+    background-color: #ffffff;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 2001;
+    animation: drawerSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes drawerSlideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .mobile-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--gov-slate-200);
+  }
+
+  .mobile-drawer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mobile-close-btn {
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--gov-slate-600);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    border-radius: 4px;
+  }
+
+  .mobile-close-btn:focus-visible {
+    outline: var(--focus-ring);
+  }
+
+  .mobile-drawer-nav {
+    flex: 1;
+    padding: 1rem 0.75rem;
+    overflow-y: auto;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mobile-nav-link {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--gov-slate-700);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .mobile-nav-link.active {
+    background-color: var(--gov-green-50);
+    color: var(--gov-green-800);
+    border-color: var(--gov-green-100);
+    font-weight: 600;
+  }
+
+  .mobile-drawer-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--gov-slate-200);
+    background-color: var(--gov-slate-50);
+    font-size: 0.75rem;
+    color: var(--gov-slate-600);
+  }
 }
