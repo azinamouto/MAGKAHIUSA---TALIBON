@@ -25,7 +25,7 @@ describe('Prisma Schema Validation', () => {
     expect(content).toContain('enum IncidentStatus {');
     expect(content).toContain('enum AssessmentState {');
   });
-
+//if it does not contain invalid single line block
   it('does not contain invalid single-line block definitions', () => {
     const content = fs.readFileSync(schemaPath, 'utf-8');
     expect(content).not.toMatch(/generator\s+\w+\s*\{[^\n]+\}/);
