@@ -14,5 +14,11 @@
     "lint": "pnpm -r --if-present lint",
     "db:generate": "pnpm --filter @magkahiusa/api db:generate",
     "db:migrate": "pnpm --filter @magkahiusa/api db:migrate"
+  },
+  "devDependencies": {
+    "prisma": "5.22.0"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0"
   }
 }

@@ -1,70 +1,96 @@
 // DATA MODEL DRAFT — requires ADR-002 before creating a migration or collecting real data.
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+generator client {
+  provider = "prisma-client-js"
+}
 
-enum IncidentStatus { DRAFT OPEN CLOSED ARCHIVED }
-enum AssessmentState { REPORTED UNDER_REVIEW VERIFIED REJECTED }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum IncidentStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  ARCHIVED
+}
+
+enum AssessmentState {
+  REPORTED
+  UNDER_REVIEW
+  VERIFIED
+  REJECTED
+}
 
 model Barangay {
-  id String @id @default(uuid()) @db.Uuid
-  code String @unique
-  name String
+  id        String           @id @default(uuid()) @db.Uuid
+  code      String           @unique
+  name      String
   households Household[]
   incidents IncidentReport[]
-  createdAt DateTime @default(now())
+  createdAt DateTime         @default(now())
 }
+
 model Household {
-  id String @id @default(uuid()) @db.Uuid
-  barangayId String @db.Uuid
-  barangay Barangay @relation(fields: [barangayId], references: [id])
-  revision Int @default(1)
-  status String @default("UNVERIFIED")
-  createdAt DateTime @default(now())
-  members HouseholdMember[]
+  id          String            @id @default(uuid()) @db.Uuid
+  barangayId  String            @db.Uuid
+  barangay    Barangay          @relation(fields: [barangayId], references: [id])
+  revision    Int               @default(1)
+  status      String            @default("UNVERIFIED")
+  createdAt   DateTime          @default(now())
+  members     HouseholdMember[]
   assessments Assessment[]
+
   @@index([barangayId])
 }
+
 model Resident {
-  id String @id @default(uuid()) @db.Uuid
-  createdAt DateTime @default(now())
+  id          String            @id @default(uuid()) @db.Uuid
+  createdAt   DateTime          @default(now())
   memberships HouseholdMember[]
 }
+
 model HouseholdMember {
-  id String @id @default(uuid()) @db.Uuid
-  householdId String @db.Uuid
-  residentId String @db.Uuid
-  startsAt DateTime
-  endsAt DateTime?
-  household Household @relation(fields: [householdId], references: [id])
-  resident Resident @relation(fields: [residentId], references: [id])
+  id          String    @id @default(uuid()) @db.Uuid
+  householdId String    @db.Uuid
+  residentId  String    @db.Uuid
+  startsAt    DateTime
+  endsAt      DateTime?
+  household   Household @relation(fields: [householdId], references: [id])
+  resident    Resident  @relation(fields: [residentId], references: [id])
+
   @@index([residentId, startsAt, endsAt])
 }
+
 model Incident {
-  id String @id @default(uuid()) @db.Uuid
-  label String
-  status IncidentStatus @default(DRAFT)
-  startedAt DateTime?
-  createdAt DateTime @default(now())
+  id          String           @id @default(uuid()) @db.Uuid
+  label       String
+  status      IncidentStatus   @default(DRAFT)
+  startedAt   DateTime?
+  createdAt   DateTime         @default(now())
   assessments Assessment[]
-  reports IncidentReport[]
+  reports     IncidentReport[]
 }
+
 model Assessment {
-  id String @id @default(uuid()) @db.Uuid
-  householdId String @db.Uuid
-  incidentId String @db.Uuid
-  household Household @relation(fields: [householdId], references: [id])
-  incident Incident @relation(fields: [incidentId], references: [id])
-  state AssessmentState @default(REPORTED)
-  revision Int @default(1)
-  createdAt DateTime @default(now())
+  id          String          @id @default(uuid()) @db.Uuid
+  householdId String          @db.Uuid
+  incidentId  String          @db.Uuid
+  household   Household       @relation(fields: [householdId], references: [id])
+  incident    Incident        @relation(fields: [incidentId], references: [id])
+  state       AssessmentState @default(REPORTED)
+  revision    Int             @default(1)
+  createdAt   DateTime        @default(now())
+
   @@unique([householdId, incidentId])
 }
+
 model IncidentReport {
-  id String @id @default(uuid()) @db.Uuid
-  incidentId String @db.Uuid
-  barangayId String @db.Uuid
-  incident Incident @relation(fields: [incidentId], references: [id])
-  barangay Barangay @relation(fields: [barangayId], references: [id])
-  reportedAt DateTime @default(now())
+  id         String    @id @default(uuid()) @db.Uuid
+  incidentId String    @db.Uuid
+  barangayId String    @db.Uuid
+  incident   Incident  @relation(fields: [incidentId], references: [id])
+  barangay   Barangay  @relation(fields: [barangayId], references: [id])
+  reportedAt DateTime  @default(now())
   verifiedAt DateTime?
 }
