@@ -60,3 +60,4 @@ describe('Environment Validation Contract', () => {
     ).toThrow('Environment validation failed');
   });
 });
+
