@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc",
+  "root": true,
+  "extends": ["./packages/config/eslint.base.json"],
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "coverage/**",
+    "*.tsbuildinfo"
+  ]
+}

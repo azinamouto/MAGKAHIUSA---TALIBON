@@ -1,0 +1,26 @@
+{
+  "root": true,
+  "env": {
+    "es2022": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "no-debugger": "error",
+    "no-duplicate-imports": "error",
+    "no-empty": ["error", { "allowEmptyCatch": false }],
+    "eqeqeq": ["error", "always"],
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "CallExpression[callee.object.name='console'][callee.property.name='trace']",
+        "message": "Do not leave console traces in production codebase."
+      }
+    ]
+  }
+}
