@@ -33,3 +33,4 @@ describe('Prisma Schema Validation', () => {
     expect(content).not.toMatch(/enum\s+\w+\s*\{[^\n]+\}/);
   });
 });
+
