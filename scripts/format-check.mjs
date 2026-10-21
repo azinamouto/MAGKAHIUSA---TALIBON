@@ -44,3 +44,4 @@ for (const dir of TARGET_DIRS) {
 }
 
 console.log('✓ Codebase format and style check completed successfully.');
+
