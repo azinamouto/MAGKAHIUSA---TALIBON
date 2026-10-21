@@ -1,29 +1,65 @@
 name: CI
+
 on:
   push:
-    branches: [main]
+    branches: [main, 'feat/**']
   pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
+
 jobs:
   validate:
+    name: Lint, Typecheck, Test & Build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/magkahiusa_ci?schema=public"
+      NODE_ENV: test
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Install pnpm
-        run: corepack pnpm install --no-frozen-lockfile
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Lint codebase
+        run: pnpm lint
+
+      - name: Check code formatting
+        run: pnpm run format:check
+
+      - name: Validate and generate Prisma client
+        run: pnpm db:generate
+
       - name: Static typecheck
-        run: corepack pnpm typecheck
-      - name: Unit tests
-        run: corepack pnpm test
-      - name: Build apps
-        run: corepack pnpm build
-      - name: Check for accidentally tracked env files
+        run: pnpm typecheck
+
+      - name: Run unit & regression tests
+        run: pnpm test
+
+      - name: Build applications and packages
+        run: pnpm build
+
+      - name: Prevent committed credentials and env files
         run: |
-          if git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env.example$'; then echo 'Tracked env file'; exit 1; fi
+          if git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env.example$'; then
+            echo 'Error: Tracked environment file detected!'
+            exit 1
+          fi
