@@ -13,8 +13,9 @@
     "test": "pnpm -r --if-present test",
     "lint": "node scripts/lint.mjs",
     "format:check": "node scripts/format-check.mjs",
+    "security:scan": "node scripts/security-scan.mjs",
     "clean": "node scripts/clean.mjs",
-    "validate": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test",
+    "validate": "pnpm lint && pnpm format:check && pnpm security:scan && pnpm typecheck && pnpm test",
     "db:generate": "pnpm --filter @magkahiusa/api db:generate",
     "db:migrate": "pnpm --filter @magkahiusa/api db:migrate"
   },
