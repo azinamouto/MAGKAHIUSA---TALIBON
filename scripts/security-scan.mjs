@@ -80,3 +80,4 @@ if (violations > 0) {
 } else {
   console.log('✓ Security scan passed cleanly. No credential or token exposures detected.');
 }
+
