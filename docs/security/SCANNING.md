@@ -20,3 +20,4 @@ pnpm run security:scan
 ```
 
 This check is integrated into root workspace checks and CI verification workflows.
+
